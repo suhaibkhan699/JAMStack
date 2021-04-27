@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LinkForm from "./components/LinkForm";
 import LinkList from "./components/LinkList";
+import EditForm from './components/EditForm'
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 // Grab all the links
 // display all the links
@@ -24,8 +26,11 @@ function App() {
   return (
     <div className="container py-5">
       <h1 className="text-center mb-5">List O' Link</h1>
-      <LinkForm refreshLinks={loadLinks} />
-      <LinkList links={links} refreshLinks={loadLinks} />
+      <Router>
+        <Route path="/" exact component={() => (<LinkForm refreshLinks={loadLinks} />)} />
+        <Route path="/" exact component={() => (<LinkList links={links} refreshLinks={loadLinks} />)} />
+        <Route path="/edit" exact component={() => (<EditForm refreshLinks={loadLinks} />)} />
+      </Router>
     </div>
   );
 }

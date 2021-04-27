@@ -1,6 +1,25 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setFormData } from "../actions";
+import { Link } from "react-router-dom";
 
 export default function LinkCard({ link, refreshLinks }) {
+  const dispatch = useDispatch();
+
+  const id = link._id,
+    name = link.url,
+    url = link.url,
+    description = link.description,
+    archived = link.archived
+
+  const linkObj = {
+    id,
+    name,
+    url,
+    description,
+    archived
+  };
+
   const archiveLink = async () => {
     link.archived = !link.archived;
     try {
@@ -36,11 +55,18 @@ export default function LinkCard({ link, refreshLinks }) {
       </div>
       <div className="card-footer">
         <button className="btn btn-warning mr-2" onClick={archiveLink}>
-          {link.archived ? 'Un-archive' : 'Archive'}
+          {link.archived ? "Un-archive" : "Archive"}
         </button>
         <button className="btn btn-danger" onClick={deleteLink}>
           Delete
         </button>
+        <Link
+          to="/edit"
+          className="btn btn-warning ml-2"
+          onClick={() => dispatch(setFormData(linkObj))}
+        >
+          Edit
+        </Link>
       </div>
     </div>
   );
